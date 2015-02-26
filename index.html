@@ -1,6 +1,7 @@
 <html>
 
 <head>
+<script type="text/javascript" src="data/words.json"></script>
 <script type="text/javascript" src="data/layouts.json"></script>
 <script type="text/javascript" src="js/functions.js"></script>
 
@@ -60,7 +61,10 @@ ctx.lineTo(100,76);
 ctx.stroke();
 
 document.getElementById("test-span-1").addEventListener("click", function() {
-	document.getElementById("message").innerHTML = "funk:" + layouts[0].name;
+	document.getElementById("message").innerHTML = layouts[0].name;
+});
+document.getElementById("test-span-2").addEventListener("click", function() {
+	document.getElementById("message").innerHTML = words[0].word;
 });
 
 </script>
