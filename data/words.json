@@ -1,16 +1,12 @@
-{
+var words = [
 
-"words": {
+	{ "word": "octo/pus", "roots": "octo/pod", "definition": "eight-footed" }
 
-{ "word": "octo/pus", "roots": "octo/pod", "definition": "eight-footed" },
-
-},
+];
 
 
-"roots": {
+var roots = [
 
-{ "root": "octo", "definition": "eight" },
+	{ "root": "octo", "definition": "eight" }
 
-}
-
-}
+];

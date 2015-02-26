@@ -1,0 +1,22 @@
+var layouts = [
+{
+	"name": "two-roots-10-words-each-layout",  
+	"roots": [
+		{
+			"position": { "left": 100, "top": 200 },
+			"centerWordConnectPoint": { "x": 20, "y": 30 },
+			"rootConnectPoint": { "x": 20, "y": 30 },
+			"priority": 1,
+			"words": [
+				{
+					"position": { "left": 70, "top": 180 },
+					"rootConnectPoint": { "x": 20, "y": 30 },
+					"wordConnectPoint": { "x": 25, "y": 36 },
+					"priority": 1,
+				}				
+			]
+		}
+	]
+}
+
+];

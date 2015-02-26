@@ -1,6 +1,9 @@
 <html>
 
 <head>
+<script type="text/javascript" src="data/layouts.json"></script>
+<script type="text/javascript" src="js/functions.js"></script>
+
 <style>
 
 #test-span-1 {
@@ -27,22 +30,27 @@
 	border-radius: 10px;
 	padding: 5px;
 }
+#myCanvas {
 
+	border: 1px solid blue;
+	border-radius: 30px;
+
+}
 </style>
 </head>
 
 <body>
 
 <span id="outer-frame">
-<span id="test-span-1">octopus</span>
-<span id="test-span-2">cephalopod</span>
+<span id="test-span-1"><a href="#octopus">octopus</a></span>
+<span id="test-span-2"><a href="#cephalopod">cephalopod</a></span>
 
-<canvas id="myCanvas" width="400" height="200"
-	style="border:1px solid #d3d3d3;">
+<canvas id="myCanvas" width="400" height="200">
 	Your browser does not support the HTML5 canvas tag.
 </canvas>
 </span>
-
+</br>
+<span id="message">[blank]</span>
 <script>
 
 var c = document.getElementById("myCanvas");
@@ -51,13 +59,9 @@ ctx.moveTo(50,50);
 ctx.lineTo(100,76);
 ctx.stroke();
 
-var resizeId = "test-span-1";
-document.getElementById(resizeId).addEventListener("resize", function() {
-	alert("A:" + c.width);
+document.getElementById("test-span-1").addEventListener("click", function() {
+	document.getElementById("message").innerHTML = "funk:" + layouts[0].name;
 });
-document.getElementById(resizeId).onresize = function() {
-	alert("B:" + c.width);
-};
 
 </script>
 
