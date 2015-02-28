@@ -1,0 +1,65 @@
+#canvasPanel {
+	border: 1px solid black;
+	border-radius: 9px;
+	padding: 5px;
+	background-color: #F6FAAC;
+
+	/* http://stackoverflow.com/questions/356809/best-way-to-center-a-div-on-a-page-vertically-and-horizontally */
+	position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+#webCanvas {
+	border: 1px solid black;
+	border-radius: 8px;
+	padding: 5px;
+	background-color: white;
+}
+
+.word {
+	font-size: 20px;
+	position: absolute;
+	display: inline-block;
+	height: 55px;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 25px;
+	padding: 5px;
+}
+
+.root {
+	font-size: 20px;
+	position: absolute;
+	display: inline-block;
+	height: 55px;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 25px;
+	padding: 5px;
+}
+
+.two-roots-ten-words-each-word {
+	width: 175px;
+}
+.two-roots-ten-words-each-root {
+	width: 110px;
+}
+.red-theme {
+	line-color: #990000;
+	background-color: #F0C2C3;
+	color: #99080A;
+} 
+.purple-theme {
+	line-color: #7A0977;
+	background-color: #ECABEA;
+	color: #540A52;
+} 
+.center-word-theme {
+	line-color: #365E96;
+	background-color: #B3CEF5;
+	color: #0D3369;
+} 
+

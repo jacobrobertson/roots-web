@@ -1,73 +1,23 @@
 <html>
 
 <head>
-<script type="text/javascript" src="data/words.json"></script>
-<script type="text/javascript" src="data/layouts.json"></script>
-<script type="text/javascript" src="js/functions.js"></script>
 
-<style>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script type="text/javascript" src="words.js"></script>
+<script type="text/javascript" src="layouts.js"></script>
+<script type="text/javascript" src="functions.js"></script>
 
-#test-span-1 {
-
-	color: red;
-	font-size: 20px;
-	position: relative;
-	left: 190px;
-	top: -161px;
-	width: 350px;
-	border: 1px solid blue;
-	border-radius: 10px;
-	padding: 5px;
-}
-#test-span-2 {
-
-	color: red;
-	font-size: 20px;
-	position: relative;
-	left: 180px;
-	width: 350px;
-	top: -101px;
-	border: 1px solid blue;
-	border-radius: 10px;
-	padding: 5px;
-}
-#myCanvas {
-
-	border: 1px solid blue;
-	border-radius: 30px;
-
-}
-</style>
 </head>
 
-<body>
+<body onload="initPage();">
 
-<span id="outer-frame">
-<span id="test-span-1"><a href="#octopus">octopus</a></span>
-<span id="test-span-2"><a href="#cephalopod">cephalopod</a></span>
+<div id="canvasPanel">
 
-<canvas id="myCanvas" width="400" height="200">
+<canvas id="webCanvas">
 	Your browser does not support the HTML5 canvas tag.
 </canvas>
-</span>
-</br>
-<span id="message">[blank]</span>
-<script>
 
-var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
-ctx.moveTo(50,50);
-ctx.lineTo(100,76);
-ctx.stroke();
-
-document.getElementById("test-span-1").addEventListener("click", function() {
-	document.getElementById("message").innerHTML = layouts[0].name;
-});
-document.getElementById("test-span-2").addEventListener("click", function() {
-	document.getElementById("message").innerHTML = words[0].word;
-});
-
-</script>
+</div>
 
 </body>
 
