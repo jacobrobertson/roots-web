@@ -4,39 +4,47 @@ var layouts = {
 {
 	"centralWord": {
 			"theme": "center-word",
-			"position": { "left": 340, "top": 340 }
+			"position": { "left": 314, "top": 290 }
 	},
 	"roots": [
 		{
 			"theme": "red",
 			"connectLineColor": "#990000",
-			"position": { "left": 370, "top": 210 },
+			"position": { "left": 370, "top": 160 },
 			"words": [
-				{
-					"position": { "left": 10, "top": 210 },
-				},				
-				{
-					"position": { "left": 60, "top": 130 },
-				},				
-				{
-					"position": { "left": 140, "top": 50 },
-				},				
-				{
-					"position": { "left": 335, "top": 10 },
-				},				
+				{ "position": { "left": 320, "top": 15 }, },
+
+				{ "position": { "left": 80, "top": 15 }, },
+				{ "position": { "left": 560, "top": 15 }, },				
+
+				{ "position": { "left": 35, "top": 95 }, },
+				{ "position": { "left": 615, "top": 95 }, },
+
+				{ "position": { "left": 20, "top": 175 }, },
+				{ "position": { "left": 625, "top": 175 }, },
+
+				{ "position": { "left": 10, "top": 255 }, },
+				{ "position": { "left": 630, "top": 255 }, },
 			]
 		},
 		{
 			"theme": "purple",
 			"connectLineColor": "#7A0977",
-			"position": { "left": 370, "top": 470 },
+			"position": { "left": 370, "top": 420 },
 			"words": [
-				{
-					"position": { "left": 10, "top": 610 },
-				},				
-				{
-					"position": { "left": 650, "top": 610 },
-				},				
+				{ "position": { "left": 320, "top": 590 }, },
+
+				{ "position": { "left": 80, "top": 590 }, },
+				{ "position": { "left": 560, "top": 590 }, },				
+
+				{ "position": { "left": 35, "top": 510 }, },
+				{ "position": { "left": 615, "top": 510 }, },
+
+				{ "position": { "left": 20, "top": 430 }, },
+				{ "position": { "left": 625, "top": 430 }, },
+
+				{ "position": { "left": 10, "top": 350 }, },
+				{ "position": { "left": 630, "top": 350 }, },
 			]
 		}
 	]

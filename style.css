@@ -20,29 +20,42 @@
 }
 
 .word {
-	font-size: 20px;
+	font-size: 18px;
+	font-family: sans-serif;
 	position: absolute;
-	display: inline-block;
+	display: table-cell;
+	vertical-align: middle
 	height: 55px;
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 25px;
 	padding: 5px;
+	text-align: center;
+}
+.word:hover {
+	cursor: hand;
+}
+.definition {
+	font-style: italic;
+	font-size: 17px;
 }
 
 .root {
-	font-size: 20px;
+	font-size: 18px;
+	font-family: sans-serif;
 	position: absolute;
-	display: inline-block;
+	display: table-cell;
+	vertical-align: middle
 	height: 55px;
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 25px;
 	padding: 5px;
+	text-align: center;
 }
 
 .two-roots-ten-words-each-word {
-	width: 175px;
+	width: 220px;
 }
 .two-roots-ten-words-each-root {
 	width: 110px;
@@ -52,14 +65,27 @@
 	background-color: #F0C2C3;
 	color: #99080A;
 } 
+.word.red-theme:hover {
+	line-color: #700D0D;
+	background-color: #FFE6E6;
+	color: #630405;
+} 
 .purple-theme {
 	line-color: #7A0977;
 	background-color: #ECABEA;
 	color: #540A52;
 } 
+.word.purple-theme:hover {
+	line-color: #630C61;
+	background-color: #DBBFDA;
+	color: #3B0939;
+} 
 .center-word-theme {
 	line-color: #365E96;
 	background-color: #B3CEF5;
 	color: #0D3369;
+	cursor: default;
 } 
-
+.center-word-theme:hover {
+	cursor: default;
+}

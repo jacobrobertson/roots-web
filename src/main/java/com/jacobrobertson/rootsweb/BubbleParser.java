@@ -2,9 +2,7 @@ package com.jacobrobertson.rootsweb;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,26 +24,6 @@ public class BubbleParser {
 		Bubble bubble = parseBubblFile(page);
 		printBubble(bubble, 0);
 		convertBubblesToItems(bubble);
-	}
-	/**
-	 * This is to try and speed up the xml parsing - it takes like 5 minutes.
-	 */
-	private String cleanDocument(String doc) throws Exception {
-		/*
-           <li id="194" pid="193">
-            <label>
-              <a name="194"/>
-              static&lt;br/&gt;(stopped)
-            </label>
-            <div class="directionalLines">
-              <a href="#34" class="anchor">aerostatic
-
-		*/
-		doc = doc.replaceAll("<a name=\"[0-9]+\"/>", "");
-		doc = doc.replaceAll(" id=\"[0-9]+\" pid=\"[0-9]+\"", "");
-		doc = doc.replaceAll(" class=\"directionalLines\"", "");
-		doc = doc.replaceAll(" href=\"#[0-9]+\" class=\"anchor\"", "");
-		return doc;
 	}
 	private Bubble parseBubblFile(String contents) throws Exception {
 		return parseBubblFileAsFlatFile(contents);
@@ -329,13 +307,10 @@ public class BubbleParser {
 			printBubble(c, indent);
 		}
 	}
-	private static String readFile(String file) throws Exception {
-		return null;
-	}
 	/**
 	 * NO - this didn't work - it's either an "attachment", or we need a cookie or something.
 	 */
-	private static String getLatestBubblFile() throws Exception {
+	static String getLatestBubblFile() throws Exception {
 		
 		// download this URL
 		// https://bubbl.us/_sys/export.php?sessID=&e=h&fn=Octopus&nm=Octopus
