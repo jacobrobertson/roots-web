@@ -33,7 +33,8 @@
 	text-align: center;
 }
 .word:hover {
-	cursor: hand;
+	cursor: pointer;
+	border-width: 2px;
 }
 .definition {
 	font-style: italic;
@@ -52,6 +53,9 @@
 	border-radius: 25px;
 	padding: 5px;
 	text-align: center;
+}
+.root:hover {
+	cursor: not-allowed;
 }
 
 .two-roots-ten-words-each-word {
@@ -88,4 +92,5 @@
 } 
 .center-word-theme:hover {
 	cursor: default;
+	border-width: 1px;
 }

@@ -1,0 +1,6 @@
+cd /home/public/roots
+put functions.js
+put index.html
+put layouts.js
+put style.css
+put words.js
