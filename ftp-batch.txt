@@ -4,6 +4,9 @@ put index.html
 put layouts.js
 put style.css
 put words.js
-put jq/jquery-1.10.2.js
-put jq/jquery-ui.css
-put jq/jquery-ui.js
+put magnifying_glass.png
+put jq/jquery-1.10.2.js jq/jquery-1.10.2.js
+put jq/jquery-ui.css jq/jquery-ui.css
+put jq/jquery-ui.js jq/jquery-ui.js
+put jq/images/ui-bg_flat_75_ffffff_40x100.png jq/images/ui-bg_flat_75_ffffff_40x100.png
+put jq/images/ui-bg_glass_75_dadada_1x400.png jq/images/ui-bg_glass_75_dadada_1x400.png
