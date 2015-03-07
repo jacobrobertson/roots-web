@@ -1,26 +1,26 @@
 <html>
-
 <head>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<link rel="stylesheet" type="text/css" href="jq/jquery-ui.css" />
 
-<link rel="stylesheet" type="text/css" href="style.css" />
-<script type="text/javascript" src="words.js"></script>
-<script type="text/javascript" src="layouts.js"></script>
-<script type="text/javascript" src="functions.js"></script>
-
+	<script type="text/javascript" src="jq/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="jq/jquery-ui.js"></script>
+	<script type="text/javascript" src="words.js"></script>
+	<script type="text/javascript" src="layouts.js"></script>
+	<script type="text/javascript" src="functions.js"></script>
 </head>
-
 <body onload="initPage();">
-
-<div id="canvasPanel">
-
-<canvas id="webCanvas">
-	Your browser does not support the HTML5 canvas tag. :(
-</canvas>
-
-<div id="spanPanel"></div>
-
-</div>
-
+	<div id="canvasPanel">
+		<canvas id="webCanvas">
+		Your browser does not support the HTML5 canvas tag. :(
+		</canvas>
+		<div id="spanPanel">
+			<span id="search-span">
+				<input type="text" id="search" value="" size="20" />
+				<br/>
+				<span id="search-definition" class="definition"></span>
+			</span>
+		</div>
+	</div>
 </body>
-
 </html>

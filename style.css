@@ -100,13 +100,49 @@
 	background-color: #BADAE8;
 	color: #181D1F;
 }
-.center-word-theme {
-	line-color: #365E96;
+#search-span {
 	background-color: #B3CEF5;
 	color: #0D3369;
-	cursor: default;
-} 
-.center-word-theme:hover {
-	cursor: default;
+	
+	font-size: 18px;
+	font-family: sans-serif;
+	position: absolute;
+	display: table-cell;
+	height: 55px;
 	border-width: 1px;
+	border-style: solid;
+	border-radius: 25px;
+	padding: 5px;
+	text-align: center;
+	
+	/* this is supposed to come from the theme */
+	width: 220px;
+}
+#search {
+	background-image: url(magnifying_glass.png);
+	background-repeat: no-repeat;
+	border-width: 1px;
+	
+	position: absolute;
+	border-style: none;
+	padding: 1px;
+	padding-left: 10px;
+	text-align: center;
+
+	font-size: 18px;
+	font-family: sans-serif;
+	position: absolute;
+	display: table-cell;
+	vertical-align: middle;
+
+	background-color: #B3CEF5;
+	color: #0D3369;
+	
+	margin-left: 10px;
+	width: 200px;
+	height: 25px;
+}
+#search-definition {
+	position: relative;
+	top: 7px;
 }

@@ -1,3 +1,4 @@
+var currentWord = "sauropod";
 function getCanvas() {
 	return document.getElementById("webCanvas");	
 }
@@ -5,6 +6,11 @@ function getCanvasContext() {
 	return getCanvas().getContext("2d");
 }
 function loadWordWeb(wordName) {
+	var test = words[wordName];
+	if (test == null) {
+		wordName = currentWord;
+	}
+	currentWord = wordName;
 	var layoutName = getBestLayoutName(wordName);
 	loadLayout(layoutName, wordName);
 }
@@ -36,19 +42,17 @@ function loadLayout(layoutName, wordName) {
 	getCanvasContext().fillStyle = "white";
 	getCanvasContext().fillRect(0, 0, getCanvas().width, getCanvas().height);
 	var webSpan = document.getElementById("spanPanel");
+	var searchSpan = document.getElementById("search-span");
 	while (webSpan.firstChild) {
 		webSpan.removeChild(webSpan.firstChild);
 	}
+	webSpan.appendChild(searchSpan);
 	
 	var parentElement = document.getElementById("webCanvas");
 	var layout = layouts[layoutName];
 
-	// create the center word
-	var centralWordLayout = layout.centralWord;
-	var centralWordSpan = addBubble(layoutName + "-word word", centralWordLayout.theme, centralWordLayout);
-	
 	var centralWord = words[wordName];
-	setBubbleText(centralWordSpan, wordName, centralWord.definition);
+	var centralWordSpan = configureSearchBox(wordName, layout);
 
 	// add all roots for the central word
 	var rootLayouts = layout.roots;
@@ -73,7 +77,6 @@ function loadLayout(layoutName, wordName) {
 				if (wordLayout == null) {
 					break;
 				}
-//				alert("span: " + wordName);
 				var wordSpan = addBubble(layoutName + "-word word", theme, wordLayout);
 				drawCenterLine(parentElement, rootSpan, wordSpan, rootSpan);
 				setBubbleLink(wordSpan, wordName, word.definition);
@@ -84,12 +87,49 @@ function loadLayout(layoutName, wordName) {
 		i++;
 	}
 }
+function configureSearchBox(wordName, layout) {
+	
+	var layout = layout.centralWord;
+	var centralWordSpan = document.getElementById("search-span");
+	centralWordSpan.style.left = layout.position.left;
+	centralWordSpan.style.top = layout.position.top;
+
+	var word = words[wordName];
+	
+	var defSpan = document.getElementById("search-definition");
+	defSpan.innerHTML = word.definition;
+
+	var searchInput = document.getElementById("search");
+	searchInput.value = wordName;
+
+	return centralWordSpan;
+}
 function setBubbleText(bubble, word, definition) {
-	bubble.innerHTML = word + " <br/><span class='definition'>" + definition + "</span>";
+	bubble.innerHTML = word + "<br/><span class='definition'>" + definition + "</span>";
 }
 function setBubbleLink(bubble, word, definition) {
 	bubble.addEventListener("click", function() { loadWordWeb(word); });
 	setBubbleText(bubble, word, definition);
+}
+function initSearchBox() {
+	var box = document.getElementById("search");
+    var availableTags = [];
+    var count = 0;
+	for (var rootName in words) {
+		availableTags[count++] = rootName;
+	}
+    $( "#search" ).autocomplete(
+    		{
+    			source: availableTags,
+    			select: function( event, ui ) { loadWordWeb(ui.item.value); }
+    		}
+    	);
+    $("#search").focus(function() {
+        $(this).select();
+    });
+    $("#search").blur(function() {
+        $(this).val(currentWord);
+    });
 }
 function drawCenterLine(parent, fromSpan, toSpan, colorHintSpan) {
 	var ctx = getCanvasContext();
@@ -145,7 +185,7 @@ function initPage() {
 	// select the starting word, either from default or URL#anchor
 	var loc = document.location.toString();
 	var pos = loc.indexOf("#");
-	var wordName = "sauropod";
+	var wordName = currentWord;
 	if (pos > 0) {
 		var temp = loc.substring(pos + 1);
 		if (temp.trim().length > 0) {
@@ -154,6 +194,7 @@ function initPage() {
 	}
 	
 	initWords();
+	initSearchBox();
 	
 	// setup the sizes
 	var c = getCanvas();
