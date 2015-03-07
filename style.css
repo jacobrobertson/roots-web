@@ -64,6 +64,12 @@
 .two-roots-ten-words-each-root {
 	width: 110px;
 }
+.three-roots-six-words-each-word {
+	width: 220px;
+}
+.three-roots-six-words-each-root {
+	width: 110px;
+}
 .red-theme {
 	line-color: #990000;
 	background-color: #F0C2C3;
@@ -83,7 +89,17 @@
 	line-color: #630C61;
 	background-color: #DBBFDA;
 	color: #3B0939;
-} 
+}
+.blue-theme {
+	line-color: #053347;
+	background-color: #91C5DB;
+	color: #055B80;
+}
+.word.blue-theme:hover {
+	line-color: #031F2B;
+	background-color: #BADAE8;
+	color: #181D1F;
+}
 .center-word-theme {
 	line-color: #365E96;
 	background-color: #B3CEF5;

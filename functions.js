@@ -5,12 +5,21 @@ function getCanvasContext() {
 	return getCanvas().getContext("2d");
 }
 function loadWordWeb(wordName) {
-	var layoutName = getBestLayoutName(name);
+	var layoutName = getBestLayoutName(wordName);
 	loadLayout(layoutName, wordName);
 }
 function getBestLayoutName(wordName) {
-	// TODO ...
-	return "two-roots-ten-words-each";
+	
+	var centralWord = words[wordName];
+	var rootsCount = 0;
+	for (var rootName in centralWord.roots) {
+		rootsCount++;
+	}
+	if (rootsCount == 3) {
+		return "three-roots-six-words-each";
+	} else {
+		return "two-roots-ten-words-each";
+	}
 }
 function loadLayout(layoutName, wordName) {
 	
