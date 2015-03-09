@@ -195,7 +195,10 @@ function initPage() {
 	
 	initWords();
 	initSearchBox();
-	
+
+	var sp = document.getElementById("spanPanel");
+	sp.style.display = "block";
+
 	// setup the sizes
 	var c = getCanvas();
 	c.width = 850;
