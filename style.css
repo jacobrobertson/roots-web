@@ -112,11 +112,11 @@
 	font-family: sans-serif;
 	position: absolute;
 	display: table-cell;
-	height: 55px;
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 25px;
 	padding: 5px;
+	padding-bottom: 10px;
 	text-align: center;
 	
 	/* this is supposed to come from the theme */
@@ -127,7 +127,6 @@
 	background-repeat: no-repeat;
 	border-width: 1px;
 	
-	position: absolute;
 	border-style: none;
 	padding: 1px;
 	padding-left: 10px;
@@ -148,5 +147,5 @@
 }
 #search-definition {
 	position: relative;
-	top: 7px;
+	top: 5px;
 }
