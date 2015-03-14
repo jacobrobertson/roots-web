@@ -15,7 +15,33 @@ import java.util.regex.Pattern;
 public class BubbleParser {
 
 	public static void main(String[] args) throws Exception {
-		new BubbleParser().parseBubblFromFile("C:\\Users\\Jacob\\git\\roots-web\\Octopus_wlg1.htm");
+//		new BubbleParser().parseBubblFromFile("C:\\Users\\Jacob\\git\\roots-web\\Octopus_wlg1.htm");
+		new BubbleParser().convertCsvToJson();
+	}
+	
+	private void convertCsvToJson() throws Exception {
+		String rpage = fileToString("C:\\Users\\Jacob\\git\\roots-web\\src\\main\\resources\\roots.csv");
+		String[] lines = rpage.split("\n");
+		Map<String, Item> rootsMap = new HashMap<String, Item>();
+		for (String line: lines) {
+			String[] split = line.trim().split("\\|");
+			Item item = new Item(split[0], split[1]);
+			rootsMap.put(item.getName(), item);
+		}
+		
+		String wpage = fileToString("C:\\Users\\Jacob\\git\\roots-web\\src\\main\\resources\\words.csv");
+		lines = wpage.split("\n");
+		Map<String, Item> wordsMap = new HashMap<String, Item>();
+		for (String line: lines) {
+			String[] split = line.trim().split("\\|");
+			Item item = new Item(split[0], split[2]);
+			String[] roots = split[1].split(",");
+			for (String root: roots) {
+				item.getRoots().add(root);
+			}
+			wordsMap.put(item.getName(), item);
+		}
+		printItems(rootsMap, wordsMap, new PrintStream(new File("C:\\Users\\Jacob\\git\\roots-web\\words.js")));
 	}
 	
 	private void parseBubblFromFile(String f) throws Exception {

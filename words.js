@@ -1,4 +1,5 @@
 var roots = {
+	"acu": { "definition": "sharp", "words": {} },
 	"aero": { "definition": "air", "words": {} },
 	"aerostatic": { "definition": "air not changing", "words": {} },
 	"anthrop": { "definition": "human", "words": {} },
@@ -71,6 +72,7 @@ var roots = {
 	"poly": { "definition": "many", "words": {} },
 	"psych": { "definition": "mind", "words": {} },
 	"pter": { "definition": "wing", "words": {} },
+	"punct": { "definition": "point; dot", "words": {} },
 	"rex": { "definition": "king", "words": {} },
 	"saurus": { "definition": "lizard", "words": {} },
 	"sinus": { "definition": "hollow", "words": {} },
@@ -91,6 +93,9 @@ var roots = {
 };
 
 var words = {
+	"accurate": { "rootNames": [ "acu", ], "definition": "precise; exact", "roots": {} },
+	"acupuncture": { "rootNames": [ "acu", "punct", ], "definition": "insertion of needles", "roots": {} },
+	"acute": { "rootNames": [ "acu", ], "definition": "sharp or severe in effect", "roots": {} },
 	"aerobiosis": { "rootNames": [ "aero", "bio", ], "definition": "life in an environment with air", "roots": {} },
 	"aerodynamic": { "rootNames": [ "aero", "dyna", ], "definition": "air in motion", "roots": {} },
 	"aerosinusitis": { "rootNames": [ "aero", "itis", "sinus", ], "definition": "air causes inflammation to sinuses", "roots": {} },
@@ -160,7 +165,6 @@ var words = {
 	"hypnosis": { "rootNames": [ "hypn", "osis", ], "definition": "the state of sleep", "roots": {} },
 	"keratosis": { "rootNames": [ "cerat", "osis", ], "definition": "having horny-like growth", "roots": {} },
 	"metamorphosis": { "rootNames": [ "meta", "morph", "osis", ], "definition": "action of changing shape", "roots": {} },
-	"mon": { "rootNames": [ "un", ], "definition": "one", "roots": {} },
 	"monochrome": { "rootNames": [ "chrom", "mon", ], "definition": "one color", "roots": {} },
 	"monograph": { "rootNames": [ "graph", "mon", ], "definition": "one writer", "roots": {} },
 	"monologue": { "rootNames": [ "logy", "mon", ], "definition": "one speaker", "roots": {} },
