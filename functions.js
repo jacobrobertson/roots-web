@@ -66,8 +66,8 @@ function loadLayout(layoutName, wordName) {
 		}
 		var theme = rootLayout.theme;
 		var rootSpan = addBubble(layoutName + "-root root", theme, rootLayout);
-		drawCenterLine(parentElement, rootSpan, centralWordSpan, rootSpan);
 		setBubbleText(rootSpan, rootName, root.definition);
+		drawCenterLine(parentElement, rootSpan, centralWordSpan, rootSpan);
 		
 		var wordLayouts = rootLayout.words;
 		var j = 0;
@@ -79,8 +79,8 @@ function loadLayout(layoutName, wordName) {
 					break;
 				}
 				var wordSpan = addBubble(layoutName + "-word word", theme, wordLayout);
-				drawCenterLine(parentElement, rootSpan, wordSpan, rootSpan);
 				setBubbleLink(wordSpan, wordName, word.definition);
+				drawCenterLine(parentElement, rootSpan, wordSpan, rootSpan);
 				
 				j++;
 			}
@@ -165,17 +165,15 @@ function addBubble(spanClass, theme, layout) {
     return span;
 }
 function initWords() {
+	var count = 0;
 	for (var wordName in words) {
 		var word = words[wordName];
 		for (i = 0; i < word.rootNames.length; i++) {
 			var root = roots[word.rootNames[i]];
-			if (root == null) {
-				alert("couldn't find: " + word.rootNames[i]);
-			}
 			word.roots[word.rootNames[i]] = root;
 			root.words[wordName] = word;
-			availableTags[i] = wordName;
 		}
+		availableTags[count++] = wordName;
 	}
 }
 function initPage() {
