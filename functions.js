@@ -1,4 +1,5 @@
-var currentWord = "sauropod";
+var currentWord = "pachycephalosaurus";
+var availableTags = [];
 function getCanvas() {
 	return document.getElementById("webCanvas");	
 }
@@ -113,19 +114,15 @@ function setBubbleLink(bubble, word, definition) {
 }
 function initSearchBox() {
 	var box = document.getElementById("search");
-    var availableTags = [];
     var count = 0;
-	for (var rootName in words) {
-		availableTags[count++] = rootName;
-	}
-    $( "#search" ).autocomplete(
-    		{
+    $("#search").autocomplete({
     			source: availableTags,
     			select: function( event, ui ) { loadWordWeb(ui.item.value); }
-    		}
-    	);
-    $("#search").focus(function() {
-        $(this).select();
+    });
+    $("#search").focus(function(){
+        $(this).one("mouseup", function() {
+            $(this).select();
+        });
     });
     $("#search").blur(function() {
         $(this).val(currentWord);
@@ -177,6 +174,7 @@ function initWords() {
 			}
 			word.roots[word.rootNames[i]] = root;
 			root.words[wordName] = word;
+			availableTags[i] = wordName;
 		}
 	}
 }
