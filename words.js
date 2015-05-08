@@ -98,8 +98,8 @@ var roots = {
 
 var words = {
 	"accurate": { "rootNames": [ "acu", ], "definition": "precise; exact", "roots": {} },
-	"acrophobia": { "rootNames": [ "acr", "phobia", ], "definition": "fear of heights", "roots": {} },
-	"acropolis": { "rootNames": [ "acr", "polis", ], "definition": "city on a hill; fortress", "roots": {} },
+	"acrophobia": { "rootNames": [ "acr", "phob", ], "definition": "fear of heights", "roots": {} },
+	"acropolis": { "rootNames": [ "acr", "poli", ], "definition": "city on a hill; fortress", "roots": {} },
 	"acupuncture": { "rootNames": [ "acu", "punct", ], "definition": "insertion of needles", "roots": {} },
 	"acute": { "rootNames": [ "acu", ], "definition": "sharp or severe in effect", "roots": {} },
 	"aerobiosis": { "rootNames": [ "aero", "bio", ], "definition": "life in an environment with air", "roots": {} },
