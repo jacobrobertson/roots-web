@@ -16,33 +16,9 @@ public class BubbleParser {
 
 	public static void main(String[] args) throws Exception {
 //		new BubbleParser().parseBubblFromFile("C:\\Users\\Jacob\\git\\roots-web\\Octopus_wlg1.htm");
-		new BubbleParser().convertCsvToJson();
+//		new BubbleParser().convertCsvToJson();
 	}
 	
-	private void convertCsvToJson() throws Exception {
-		String rpage = fileToString("C:\\Users\\Jacob\\git\\roots-web\\src\\main\\resources\\roots.csv");
-		String[] lines = rpage.split("\n");
-		Map<String, Item> rootsMap = new HashMap<String, Item>();
-		for (String line: lines) {
-			String[] split = line.trim().split("\\|");
-			Item item = new Item(split[0], split[1]);
-			rootsMap.put(item.getName(), item);
-		}
-		
-		String wpage = fileToString("C:\\Users\\Jacob\\git\\roots-web\\src\\main\\resources\\words.csv");
-		lines = wpage.split("\n");
-		Map<String, Item> wordsMap = new HashMap<String, Item>();
-		for (String line: lines) {
-			String[] split = line.trim().split("\\|");
-			Item item = new Item(split[0], split[2]);
-			String[] roots = split[1].split(",");
-			for (String root: roots) {
-				item.getRoots().add(root);
-			}
-			wordsMap.put(item.getName(), item);
-		}
-		printItems(rootsMap, wordsMap, new PrintStream(new File("C:\\Users\\Jacob\\git\\roots-web\\words.js")));
-	}
 	
 	private void parseBubblFromFile(String f) throws Exception {
 		String page = fileToString(f);
@@ -138,7 +114,7 @@ public class BubbleParser {
 		Map<String, Item> rootsMap = new HashMap<String, Item>();
 		Map<String, Item> wordsMap = new HashMap<String, Item>();
 		convertBubblesToItems(parent, rootsMap, wordsMap, false);
-		printItems(rootsMap, wordsMap, System.out);
+		JsonDataMaker.printItems(rootsMap, wordsMap, System.out);
 	}
 	private void convertBubblesToItems(Bubble bubble, Map<String, Item> rootsMap, Map<String, Item> wordsMap, boolean isRoot) {
 		Map<String, Item> map;
@@ -176,50 +152,6 @@ public class BubbleParser {
 			convertBubblesToItems(child, rootsMap, wordsMap, !isRoot);
 		}
 
-	}
-	/**
-	 *
-		var words = {
-			"pachycephalosaurus": { "rootNames": ["pach", "cephal", "saurus"], "definition": "thick headed lizard", "roots": {} },
-		};
-		var roots = {
-			"octo": { "definition": "eight", "words": {} },
-		};
-	 */
-	private void printItems(Map<String, Item> rootsMap, Map<String, Item> wordsMap, PrintStream out) {
-		List<String> keys = new ArrayList<String>(rootsMap.keySet());
-		Collections.sort(keys);
-		out.print("var roots = {\n");
-		for (String name: keys) {
-			Item root = rootsMap.get(name);
-			out.print("\t\"");
-			out.print(root.getName());
-			out.print("\": { \"definition\": \"");
-			out.print(root.getDefinition());
-			out.print("\", \"words\": {} },\n");
-		}
-		out.print("};\n\n");
-		
-		out.print("var words = {\n");
-		keys = new ArrayList<String>(wordsMap.keySet());
-		Collections.sort(keys);
-		for (String name: keys) {
-			Item word = wordsMap.get(name);
-			out.print("\t\"");
-			out.print(word.getName());
-			out.print("\": { \"rootNames\": [ ");
-			List<String> roots = new ArrayList<String>(word.getRoots());
-			Collections.sort(roots);
-			for (String root: roots) {
-				out.print("\"");
-				out.print(root);
-				out.print("\", ");
-			}
-			out.print("], \"definition\": \"");
-			out.print(word.getDefinition());
-			out.print("\", \"roots\": {} },\n");
-		}
-		out.print("};\n");
 	}
 	private String replace(String s, String f, String r) {
 		return Pattern.compile(f, Pattern.DOTALL).matcher(s).replaceAll(r);
