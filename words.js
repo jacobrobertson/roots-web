@@ -1,7 +1,9 @@
 var roots = {
+	"acr": { "definition": "height, summit, tip", "words": {} },
 	"acu": { "definition": "sharp", "words": {} },
 	"aero": { "definition": "air", "words": {} },
 	"aerostatic": { "definition": "air not changing", "words": {} },
+	"aev": { "definition": "age", "words": {} },
 	"anthrop": { "definition": "human", "words": {} },
 	"anti": { "definition": "against; preventing", "words": {} },
 	"aqua": { "definition": "water", "words": {} },
@@ -68,8 +70,10 @@ var roots = {
 	"phon": { "definition": "sound", "words": {} },
 	"photo": { "definition": "light", "words": {} },
 	"pod": { "definition": "foot", "words": {} },
+	"poli": { "definition": "city", "words": {} },
 	"polien": { "definition": "to sell", "words": {} },
 	"poly": { "definition": "many", "words": {} },
+	"prim": { "definition": "first", "words": {} },
 	"psych": { "definition": "mind", "words": {} },
 	"pter": { "definition": "wing", "words": {} },
 	"punct": { "definition": "point; dot", "words": {} },
@@ -94,6 +98,8 @@ var roots = {
 
 var words = {
 	"accurate": { "rootNames": [ "acu", ], "definition": "precise; exact", "roots": {} },
+	"acrophobia": { "rootNames": [ "acr", "phobia", ], "definition": "fear of heights", "roots": {} },
+	"acropolis": { "rootNames": [ "acr", "polis", ], "definition": "city on a hill; fortress", "roots": {} },
 	"acupuncture": { "rootNames": [ "acu", "punct", ], "definition": "insertion of needles", "roots": {} },
 	"acute": { "rootNames": [ "acu", ], "definition": "sharp or severe in effect", "roots": {} },
 	"aerobiosis": { "rootNames": [ "aero", "bio", ], "definition": "life in an environment with air", "roots": {} },
@@ -192,6 +198,7 @@ var words = {
 	"polygamy": { "rootNames": [ "gamy", "poly", ], "definition": "many spouses", "roots": {} },
 	"polygon": { "rootNames": [ "gon", "poly", ], "definition": "many corners", "roots": {} },
 	"polypod": { "rootNames": [ "pod", "poly", ], "definition": "many foot", "roots": {} },
+	"primeval": { "rootNames": [ "aev", "prim", ], "definition": "earliest ages", "roots": {} },
 	"psychiatry": { "rootNames": [ "iatry", "psych", ], "definition": "mind healing", "roots": {} },
 	"psychology": { "rootNames": [ "logy", "psych", ], "definition": "study of the mind", "roots": {} },
 	"psychosis": { "rootNames": [ "osis", "psych", ], "definition": "severe mental disorder", "roots": {} },
