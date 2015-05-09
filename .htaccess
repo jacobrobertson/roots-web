@@ -1,0 +1,4 @@
+RewriteEngine on
+
+# rewrites anything like ../roots/w/myword to ../roots/#myword
+RewriteRule ^w/(.*)$ http://%{SERVER_NAME}/roots#$1 [NE]
