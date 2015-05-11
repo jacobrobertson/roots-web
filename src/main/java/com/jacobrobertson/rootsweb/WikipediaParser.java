@@ -3,6 +3,7 @@ package com.jacobrobertson.rootsweb;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,6 +42,7 @@ public class WikipediaParser {
 			}
 			sets.add(set);
 		}
+		List<String> strings = new ArrayList<String>();
 		for (Set<String> set: sets) {
 //			System.out.println(">>>> Start >>>> " + set);
 			for (Set<String> checkSet: sets) {
@@ -50,9 +52,14 @@ public class WikipediaParser {
 				Set<String> test = new HashSet<String>(checkSet);
 				test.retainAll(set);
 				if (!test.isEmpty()) {
-					System.out.println(test + " =====> " + checkSet);
+//					System.out.println(test + " =====> " + checkSet);
+					strings.add(test + " > " + checkSet);
 				}
 			}
+		}
+		Collections.sort(strings);
+		for (String s: strings) {
+			System.out.println(s.toLowerCase());
 		}
 	}
 	

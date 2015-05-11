@@ -21,7 +21,7 @@ public class JsonDataMaker {
 		createJsonFiles("./words.js");
 	}
 
-	public static void createJsonFiles(String outFilePath) throws Exception {
+	public static Map<String, Item> downloadRootItems() throws Exception {
 		String rpage = downloadRoots();
 		Iterable<CSVRecord> lines = parseCsvFile(rpage);
 		Map<String, Item> rootsMap = new HashMap<String, Item>();
@@ -29,9 +29,12 @@ public class JsonDataMaker {
 			Item item = new Item(line.get(0), line.get(1));
 			rootsMap.put(item.getName(), item);
 		}
+		return rootsMap;
+	}
 
+	public static Map<String, Item> downloadWordItems() throws Exception {
 		String wpage = downloadWords();
-		lines = parseCsvFile(wpage);
+		Iterable<CSVRecord> lines = parseCsvFile(wpage);
 		Map<String, Item> wordsMap = new HashMap<String, Item>();
 		for (CSVRecord line : lines) {
 			Item item = new Item(line.get(0), line.get(2));
@@ -41,7 +44,10 @@ public class JsonDataMaker {
 			}
 			wordsMap.put(item.getName(), item);
 		}
-		printItems(rootsMap, wordsMap, new PrintStream(new File(
+		return wordsMap;
+	}
+	public static void createJsonFiles(String outFilePath) throws Exception {
+		printItems(downloadRootItems(), downloadWordItems(), new PrintStream(new File(
 				outFilePath
 //				"C:\\Users\\Jacob\\git\\roots-web\\words.js"
 				)));
