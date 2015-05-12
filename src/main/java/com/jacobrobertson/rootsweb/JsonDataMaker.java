@@ -77,10 +77,10 @@ public class JsonDataMaker {
 		};
 	 */
 	public static void printItems(Map<String, Item> rootsMap, Map<String, Item> wordsMap, PrintStream out) {
-		List<String> keys = new ArrayList<String>(rootsMap.keySet());
-		Collections.sort(keys);
+		List<String> rootKeys = new ArrayList<String>(rootsMap.keySet());
+		Collections.sort(rootKeys);
 		out.print("var roots = {\n");
-		for (String name: keys) {
+		for (String name: rootKeys) {
 			Item root = rootsMap.get(name);
 			out.print("\t\"");
 			out.print(root.getName());
@@ -91,9 +91,9 @@ public class JsonDataMaker {
 		out.print("};\n\n");
 		
 		out.print("var words = {\n");
-		keys = new ArrayList<String>(wordsMap.keySet());
-		Collections.sort(keys);
-		for (String name: keys) {
+		List<String> wordKeys = new ArrayList<String>(wordsMap.keySet());
+		Collections.sort(wordKeys);
+		for (String name: wordKeys) {
 			Item word = wordsMap.get(name);
 			out.print("\t\"");
 			out.print(word.getName());
@@ -101,6 +101,11 @@ public class JsonDataMaker {
 			List<String> roots = new ArrayList<String>(word.getRoots());
 			Collections.sort(roots);
 			for (String root: roots) {
+				root = root.trim();
+				// validate the root exists
+				if (!rootsMap.containsKey(root)) {
+					throw new IllegalArgumentException("Word: " + name + " has unknown root " + root);
+				}
 				out.print("\"");
 				out.print(root);
 				out.print("\", ");

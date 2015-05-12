@@ -1,5 +1,7 @@
 var currentWord = "pachycephalosaurus";
 var availableTags = [];
+var maxDefinitionLength = 60;
+
 function getCanvas() {
 	return document.getElementById("webCanvas");	
 }
@@ -89,7 +91,6 @@ function loadLayout(layoutName, wordName) {
 	}
 }
 function configureSearchBox(wordName, layout) {
-	
 	var layout = layout.centralWord;
 	var centralWordSpan = document.getElementById("search-span");
 	centralWordSpan.style.left = layout.position.left;
@@ -99,14 +100,23 @@ function configureSearchBox(wordName, layout) {
 	
 	var defSpan = document.getElementById("search-definition");
 	defSpan.innerHTML = word.definition;
+	defSpan.className = getDefinitionStyle(word.definition);
 
 	var searchInput = document.getElementById("search");
 	searchInput.value = wordName;
 
 	return centralWordSpan;
 }
+function getDefinitionStyle(definition) {
+	var styleClass = "definition";
+	if (definition.length > maxDefinitionLength) {
+		styleClass = "long-definition";
+	}
+	return styleClass;
+}
 function setBubbleText(bubble, word, definition) {
-	bubble.innerHTML = word + "<br/><span class='definition'>" + definition + "</span>";
+	var styleClass = getDefinitionStyle(definition);
+	bubble.innerHTML = word + "<br/><span class='" + styleClass + "'>" + definition + "</span>";
 }
 function setBubbleLink(bubble, word, definition) {
 	bubble.addEventListener("click", function() { loadWordWeb(word); });
@@ -116,6 +126,7 @@ function initSearchBox() {
 	var box = document.getElementById("search");
     var count = 0;
     $("#search").autocomplete({
+				autoFocus: true,
     			source: availableTags,
     			select: function( event, ui ) { loadWordWeb(ui.item.value); }
     });

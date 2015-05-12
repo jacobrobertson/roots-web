@@ -42,7 +42,11 @@
 }
 .definition {
 	font-style: italic;
-	font-size: 17px;
+	font-size: 16px;
+}
+.long-definition {
+	font-style: italic;
+	font-size: 12px;
 }
 
 .root {
