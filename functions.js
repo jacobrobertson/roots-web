@@ -115,6 +115,10 @@ function getDefinitionStyle(definition) {
 	return styleClass;
 }
 function setBubbleText(bubble, word, definition) {
+	var paren = word.indexOf("(");
+	if (paren > 0) {
+		word = word.substring(0, paren);
+	}
 	var styleClass = getDefinitionStyle(definition);
 	bubble.innerHTML = word + "<br/><span class='" + styleClass + "'>" + definition + "</span>";
 }
