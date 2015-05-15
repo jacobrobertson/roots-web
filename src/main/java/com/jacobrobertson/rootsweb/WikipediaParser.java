@@ -20,8 +20,8 @@ public class WikipediaParser {
 
 	public static void main(String[] args) throws Exception {
 		List<Item> roots = downloadRoots();
-//		printWordsUsedTwice(roots);
-		printCompleteRootsReplacement(roots);
+		printWordsUsedTwice(roots);
+//		printCompleteRootsReplacement(roots);
 	}
 	
 	public static List<Item> downloadRoots() throws Exception {
@@ -275,6 +275,7 @@ public class WikipediaParser {
 	
 	public static void printWordsUsedTwice(List<Item> roots) throws Exception {
 		Map<String, Item> existing = JsonDataMaker.downloadWordItems();
+		Map<String, Item> driveRoots = JsonDataMaker.downloadRootItems();
 		Set<String> found = new HashSet<String>();
 		List<String> strings = new ArrayList<String>();
 		for (Item root: roots) {
@@ -284,6 +285,7 @@ public class WikipediaParser {
 			Set<String> set = root.getRoots();
 //			System.out.println(">>>> Start >>>> " + set);
 			for (Item checkRoot: roots) {
+				// these "roots" are actually the words
 				Set<String> checkSet = checkRoot.getRoots();
 				if (set == checkSet) {
 					continue;
@@ -299,6 +301,11 @@ public class WikipediaParser {
 							&& root.getName() != null
 							) {
 						found.add(testString);
+						
+						// try to determine the actual root numbers
+						root = getDriveRoot(root, driveRoots);
+						checkRoot = getDriveRoot(checkRoot, driveRoots);
+						
 						strings.add(testString + "\t" + root.getName() + ", " + checkRoot.getName());
 					}
 				}
@@ -308,6 +315,37 @@ public class WikipediaParser {
 		for (String s: strings) {
 			System.out.println(s);
 		}
+	}
+	private static List<Item> getSimpleMatches(Item wikiRoot, Map<String, Item> driveRoots) {
+		List<Item> matches = new ArrayList<Item>();
+		String wikiName = wikiRoot.getName();
+		for (Item driveRoot: driveRoots.values()) {
+			String driveName = driveRoot.getSimpleName();
+			if (driveName.equals(wikiName)) {
+				matches.add(driveRoot);
+			}
+		}
+		return matches;
+	}
+	private static Item getDriveRoot(Item wikiRoot, Map<String, Item> driveRoots) {
+		String wikiDef = JsonDataMaker.getComparableDef(wikiRoot.getDefinition());
+		List<Item> matches = getSimpleMatches(wikiRoot, driveRoots);
+		if (!matches.isEmpty()) {
+			for (Item match: matches) {
+				String matchDef = JsonDataMaker.getComparableDef(match.getDefinition());
+				if (wikiDef.equals(matchDef)) {
+					return match;
+				}
+			}
+			for (Item match: matches) {
+				String matchDef = JsonDataMaker.getComparableDef(match.getDefinition());
+				if (wikiDef.contains(matchDef) || matchDef.contains(wikiDef)) {
+					return match;
+				}
+			}
+			System.out.println(">>>>> could not figure out match for : " + wikiRoot.getName());
+		}
+		return wikiRoot;
 	}
 	
 	public static String download() throws Exception {

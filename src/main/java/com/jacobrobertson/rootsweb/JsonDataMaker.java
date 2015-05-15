@@ -66,14 +66,14 @@ public class JsonDataMaker {
 				if (s1.equals(s2)) {
 					String d1 = getComparableDef(r1.getDefinition());
 					String d2 = getComparableDef(r2.getDefinition());
-					if (d1.contains(d2) || d2.contains(d1)) {
+					if ((d1.contains(d2) || d2.contains(d1)) && !(d1.startsWith(">") || d2.startsWith(">"))) {
 						System.out.println(">>>> SIMILAR: " + s2 + " - " + d1 + " / " + d2);
 					}
 				}
 			}
 		}
 	}
-	private static String getComparableDef(String s) {
+	public static String getComparableDef(String s) {
 		String[] split = s.split(";|,");
 		for (int i = 0; i < split.length; i++) {
 			split[i] = split[i].trim().toUpperCase();
