@@ -6,6 +6,7 @@ put layouts.js
 put style.css
 put words.js
 put magnifying_glass.png
+put link.png
 put jq/jquery-1.10.2.js jq/jquery-1.10.2.js
 put jq/jquery-ui.css jq/jquery-ui.css
 put jq/jquery-ui.js jq/jquery-ui.js
