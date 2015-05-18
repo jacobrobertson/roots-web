@@ -1,6 +1,6 @@
 var currentWord = "pachycephalosaurus";
 var availableTags = [];
-var maxDefinitionLength = 60;
+var singleLineMaxLength = 29;
 
 function getCanvas() {
 	return document.getElementById("webCanvas");	
@@ -40,7 +40,6 @@ function loadLayout(layoutName, wordName) {
 	loc = loc + "#" + wordName;
 	document.location = loc;
 	
-	
 	// clear all content from canvas and spans
 	getCanvasContext().fillStyle = "white";
 	getCanvasContext().fillRect(0, 0, getCanvas().width, getCanvas().height);
@@ -68,7 +67,7 @@ function loadLayout(layoutName, wordName) {
 		}
 		var theme = rootLayout.theme;
 		var rootSpan = addBubble(layoutName + "-root root", theme, rootLayout);
-		setBubbleText(rootSpan, rootName, root.definition);
+		setBubbleText(rootSpan, rootName, root.definition, false);
 		drawCenterLine(parentElement, rootSpan, centralWordSpan, rootSpan);
 		
 		var wordLayouts = rootLayout.words;
@@ -108,23 +107,42 @@ function configureSearchBox(wordName, layout) {
 	return centralWordSpan;
 }
 function getDefinitionStyle(definition) {
-	var styleClass = "definition";
-	if (definition.length > maxDefinitionLength) {
-		styleClass = "long-definition";
+	if (isDefinitionLong(definition)) {
+		return "long-definition";
+	} else {
+		return "definition";
 	}
-	return styleClass;
 }
-function setBubbleText(bubble, word, definition) {
+function isDefinitionLong(definition) {
+	if (definition.length <= singleLineMaxLength) {
+		return false;
+	}
+	if (definition.length >= singleLineMaxLength * 2) {
+		return true;
+	}
+	// starting at the single line max length, work your way backwards and find the position of a space
+	// add one to maxLength so we get a space if it's there
+	var firstLine = definition.substring(0, singleLineMaxLength + 1); 
+	var pos = firstLine.lastIndexOf(" ");
+	// if we have more left over than can fit on one line it is a long definition
+	return (definition.length - pos + 1 > singleLineMaxLength);
+}
+function setBubbleText(bubble, word, definition, linkImage) {
 	var paren = word.indexOf("(");
 	if (paren > 0) {
 		word = word.substring(0, paren);
 	}
 	var styleClass = getDefinitionStyle(definition);
-	bubble.innerHTML = word + "<br/><span class='" + styleClass + "'>" + definition + "</span>";
+	var html = word;
+	if (linkImage) {
+		html = html + "<img class='goto-link' src='link.png'/>";
+	}
+	html = html + "<br/><span class='" + styleClass + "'>" + definition + "</span>";
+	bubble.innerHTML = html;
 }
 function setBubbleLink(bubble, word, definition) {
 	bubble.addEventListener("click", function() { loadWordWeb(word); });
-	setBubbleText(bubble, word, definition);
+	setBubbleText(bubble, word, definition, true);
 }
 function initSearchBox() {
 	var box = document.getElementById("search");
@@ -191,8 +209,7 @@ function initWords() {
 		availableTags[count++] = wordName;
 	}
 }
-function initPage() {
-
+function getUrlWordName() {
 	// select the starting word, either from default or URL#anchor
 	var loc = document.location.toString();
 	var pos = loc.indexOf("#");
@@ -203,10 +220,16 @@ function initPage() {
 			wordName = temp.trim();
 		}
 	}
-	
+	return wordName;
+}
+function initPage() {
 	initWords();
 	initSearchBox();
-
+	
+	$(window).bind('hashchange', function() {
+		loadWordWebFromUrl();
+	});
+	
 	var sp = document.getElementById("spanPanel");
 	sp.style.display = "block";
 
@@ -219,5 +242,9 @@ function initPage() {
 	s.style.width = (c.width + 12) + "px";
 	s.style.height = (c.height + 12) + "px";
 	
+	loadWordWebFromUrl();
+}
+function loadWordWebFromUrl() {
+	var wordName = getUrlWordName();
 	loadWordWeb(wordName);
 }

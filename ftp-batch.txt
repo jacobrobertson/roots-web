@@ -1,4 +1,5 @@
 cd /home/public/roots
+put sitemap.xml
 put functions.js
 put index.html
 put layouts.js
