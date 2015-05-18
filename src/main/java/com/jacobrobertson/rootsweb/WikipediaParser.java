@@ -181,17 +181,17 @@ public class WikipediaParser {
 		// now that the base roots are assigned, assign to all the alternates
 		
 	}
-	private static class ItemNameComparator implements Comparator<Item> {
+	public static class ItemNameComparator implements Comparator<Item> {
 		@Override
 		public int compare(Item i1, Item i2) {
 			String s1 = i1.getSimpleName();
-			String s2 = i1.getSimpleName();
+			String s2 = i2.getSimpleName();
 			int comp = s1.compareTo(s2);
 			if (comp != 0) {
 				return comp;
 			}
 			Integer n1 = i1.getNumber();
-			Integer n2 = i1.getNumber();
+			Integer n2 = i2.getNumber();
 			if (n1 != n2) {
 				if (n1 == 0) {
 					return 1;
