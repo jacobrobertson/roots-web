@@ -3,12 +3,8 @@ package com.jacobrobertson.rootsweb;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -20,7 +16,7 @@ public class BubbleParser {
 	}
 	
 	
-	private void parseBubblFromFile(String f) throws Exception {
+	public void parseBubblFromFile(String f) throws Exception {
 		String page = fileToString(f);
 //		page = "<funk>house</funk>";
 		Bubble bubble = parseBubblFile(page);
