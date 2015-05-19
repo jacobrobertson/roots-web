@@ -204,7 +204,7 @@ public class WikipediaParser {
 			return i1.getDefinition().compareTo(i2.getDefinition());
 		}
 	}
-	private static String cleanDefinition(String def) {
+	public static String cleanDefinition(String def) {
 		StringBuilder buf = new StringBuilder();
 		Matcher m = definitionPattern.matcher(def);
 		int last = 0;
