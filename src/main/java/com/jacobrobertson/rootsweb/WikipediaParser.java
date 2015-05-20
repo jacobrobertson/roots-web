@@ -20,8 +20,8 @@ public class WikipediaParser {
 
 	public static void main(String[] args) throws Exception {
 		List<Item> roots = downloadRoots();
-		printWordsUsedTwice(roots);
-//		printCompleteRootsReplacement(roots);
+//		printWordsUsedTwice(roots);
+		printCompleteRootsReplacement(roots);
 	}
 	
 	public static List<Item> downloadRoots() throws Exception {
@@ -31,17 +31,21 @@ public class WikipediaParser {
 	
 	public static List<Item> parse(String page) {
 		
-		Pattern tablePattern = Pattern.compile("\\| (.*?) \\|\\| (.*?) \\|\\| .*?\\|\\| .*? \\|\\| (.*)");
+		// 	Root	Meaning in English	Origin language	Etymology (root origin)	English examples
+		Pattern tablePattern = Pattern.compile("\\| (.*?) \\|\\| (.*?) \\|\\| .*?\\|\\| (.*?) \\|\\| (.*)");
 		Matcher matcher = tablePattern.matcher(page);
 		
 		List<Item> roots = new ArrayList<Item>();
 		
 		while (matcher.find()) {
-			String words = matcher.group(3);
+			String words = matcher.group(4);
 			String def = matcher.group(2);
+			String etymology = matcher.group(3);
+			Set<String> eroots = parseEtymologyToRoots(etymology);
 			def = cleanDefinition(def);
 			Item root = new Item(null, def);
-			parseName(matcher.group(1), root);	
+			parseName(matcher.group(1), root);
+			root.getAlternatives().addAll(eroots);
 			roots.add(root);
 			String[] split = words.split(",");
 			for (String word: split) {
@@ -59,7 +63,59 @@ public class WikipediaParser {
 		}
 		return roots;
 	}
-	
+	/*
+	 * ''[[wikt:cado#Latin|cadere]]'', ''casus''
+	 * [[wikt:καλός#Ancient Greek|καλός]] (''kalós'') "beautiful"; [[wikt:κάλλος#Ancient Greek|κάλλος]] (''kállos'') "beauty", κάλλιστος (''kállistos'')
+	 * from Latin ''[[wikt:calx#Latin|calx]]'' (genitive ''calcis'') "lime", from Greek [[wikt:χάλιξ#Ancient Greek|χάλιξ]] (''khalix'') "pebble", "limestone"
+	 * ''acutus'', past participle of ''acuere'' "to sharpen", from ''[[wikt:acus#Latin|acus]]'' "needle"
+	 * ''[[wikt:acer#Latin|acer, acris]]'', ''[[wikt:acerbus|acerbus]]'', ''[[wikt:aceo|acere]]''
+	 * ''[[wikt:leo#Latin|leo'']], ''leonis''
+	 */
+	private static Set<String> parseEtymologyToRoots(String text) {
+		Pattern w = Pattern.compile("\\[\\[wikt:(.*?)(#.*?)?\\|(.*?)\\]\\]");
+		Pattern p = Pattern.compile("''(.*?)''");
+		Matcher m = p.matcher(text);
+		Set<String> roots = new HashSet<String>();
+		
+		StringBuilder buf = new StringBuilder();
+		while (m.find()) {
+			String root = m.group(1);
+			root = root.trim();
+			if (root.indexOf('(') < 0) {
+				Matcher wm = w.matcher(root);
+				if (wm.matches()) {
+					if (buf.length() > 0) {
+						buf.append(",");
+					}
+					buf.append(wm.group(1));
+					buf.append(",");
+					buf.append(wm.group(3));
+				} else {
+					if (buf.length() > 0) {
+						buf.append(",");
+					}
+					buf.append(root);
+				}
+			}
+		}
+		String[] split = buf.toString().split(",");
+		for (String one: split) {
+			one = getCleanRootName(one);
+			roots.add(one);
+		}
+		
+		return roots;
+	}
+	private static String getCleanRootName(String name) {
+		name = name.trim();
+		if (name.startsWith("-")) {
+			name = name.substring(1);
+		}
+		if (name.endsWith("-")) {
+			name = name.substring(0, name.length() - 1);
+		}
+		return name;
+	}
 	/*
 	 * One of
 	 * simple
@@ -73,33 +129,41 @@ public class WikipediaParser {
 		// we start with the drive roots, because we've manually fixed a lot there - don't want to undo that
 		List<Item> merged = new ArrayList<Item>(driveRoots);
 		for (Item wikiRoot: wikiRoots) {
-			String wikiSimpleName = wikiRoot.getSimpleName();
-			String wikiDef = wikiRoot.getDefinition();
 			boolean found = false;
 			for (Item driveRoot: driveRoots) {
-				if (driveRoot.getSimpleName().equals(wikiSimpleName)) {
-					String driveDef = driveRoot.getDefinition();
-					if (driveDef.equals(wikiDef)) {
-						found = true;
-						break;
-					}
-					if (wikiDef.contains(driveDef)) {
-						System.out.println(">>>>>> consider manual merge of " + wikiSimpleName + " wikiDef(" + wikiDef + "), driveDef(" + driveDef + ")");
-						found = true;
-						break;
-					}
-					if (driveDef.contains(wikiDef)) {
-						found = true;
-						break;
-					}
+				if (isDuplicate(wikiRoot, driveRoot, true)) {
+					found = true;
+					break;
 				}
 			}
 			if (!found) {
+				System.out.println("New root? " + wikiRoot.getSimpleName() + "(" + wikiRoot.getDefinition() + ")");
 				merged.add(wikiRoot);
 			}
 		}
 		
 		return merged;
+	}
+	private static boolean isDuplicate(Item wikiRoot, Item driveRoot, boolean compareNames) {
+		if (compareNames && !wikiRoot.getSimpleName().equals(driveRoot.getSimpleName())) {
+			return false;
+		}
+		String driveDef = JsonDataMaker.getComparableDef(driveRoot.getDefinition());
+		String wikiDef = JsonDataMaker.getComparableDef(wikiRoot.getDefinition());
+		if (driveDef.equals(wikiDef)) {
+			return true;
+		}
+		if (wikiDef.contains(driveDef)) {
+			System.out.println(">>>>>> consider manual merge of " + wikiRoot.getSimpleName() + " wikiDef(" + wikiDef + "), driveDef(" + driveDef + ")");
+			return true;
+		}
+		if (driveDef.contains(wikiDef)) {
+			return true;
+		}
+		if (driveRoot.getParent() != null) {
+			return isDuplicate(wikiRoot, driveRoot.getParent(), false);
+		}
+		return false;
 	}
 	
 	/**
@@ -139,6 +203,7 @@ public class WikipediaParser {
 		List<Item> alts = new ArrayList<Item>();
 		List<String> strings = root.getAlternatives();
 		for (String alt: strings) {
+//			System.out.println(root.getName() + ", " + alt);
 			Item i = new Item(alt, root.getDefinition());
 			i.setParent(root);
 			alts.add(i);
@@ -257,13 +322,7 @@ public class WikipediaParser {
 		// remove all dashes and spaces
 		String first = null;
 		for (String name: split) {
-			name = name.trim();
-			if (name.startsWith("-")) {
-				name = name.substring(1);
-			}
-			if (name.endsWith("-")) {
-				name = name.substring(0, name.length() - 1);
-			}
+			name = getCleanRootName(name);
 			if (first == null) {
 				first = name;
 			} else {
@@ -316,14 +375,14 @@ public class WikipediaParser {
 			System.out.println(s);
 		}
 	}
-	public static List<Item> getSimpleMatches(Item item, Map<String, Item> driveItems) {
-		return getSimpleMatches(item.getName(), driveItems);
+	public static List<Item> getSimpleMatches(Item wikiRoot, Map<String, Item> driveRoots) {
+		return getSimpleMatches(wikiRoot.getName(), driveRoots);
 	}
-	public static List<Item> getSimpleMatches(String itemName, Map<String, Item> driveItems) {
+	public static List<Item> getSimpleMatches(String wikiName, Map<String, Item> driveRoots) {
 		List<Item> matches = new ArrayList<Item>();
-		for (Item driveRoot: driveItems.values()) {
+		for (Item driveRoot: driveRoots.values()) {
 			String driveName = driveRoot.getSimpleName();
-			if (driveName.equals(itemName)) {
+			if (driveName.equals(wikiName)) {
 				matches.add(driveRoot);
 			}
 		}

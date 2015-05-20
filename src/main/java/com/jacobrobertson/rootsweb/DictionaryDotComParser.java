@@ -55,6 +55,12 @@ public class DictionaryDotComParser {
 		EasyDefineUtils define = new EasyDefineUtils();
 		Map<String, String> definitions = define.getDefinitions(list);
 		for (String word: list) {
+			Item driveWord = driveWords.get(word);
+			if (driveWord != null) {
+				continue;
+//				System.out.println("\t>" + word + " > " + driveWord.getRoots() 
+//						+ " / " + parsedWord.getName() + parsedWord.getRoots());
+			}
 			Item parsedWord = parseOneWord(word);
 			if (parsedWord == null) {
 				continue;
@@ -111,11 +117,11 @@ public class DictionaryDotComParser {
 				buf.append(def);
 				System.out.println(buf);
 			}
-			Item driveWord = driveWords.get(word);
-			if (driveWord != null) {
+//			Item driveWord = driveWords.get(word);
+//			if (driveWord != null) {
 //				System.out.println("\t>" + word + " > " + driveWord.getRoots() 
 //						+ " / " + parsedWord.getName() + parsedWord.getRoots());
-			}
+//			}
 		}
 	}
 	private String getMatchingRootDefs(Item word, Collection<String> simpleRootsList) {
@@ -199,11 +205,14 @@ public class DictionaryDotComParser {
 	}
 	
 
+	/*
+	 * TODO restrict these even more - like choose "from <.." and "+ <..."
+	 */
 	private Pattern[] xrefPatterns = { 
 			Pattern.compile("<a class=\"dbox-xref\" href=\"/browse/.*?\">(.*?)</a>"),
 			Pattern.compile("<a class=\"dbox-xref dbox-roman\" href=\"http://dictionary.reference.com/browse/.*?\">(.*?)</a>"),
 			Pattern.compile("<span class=\"dbox-italic\">(.*?)</span>"),
-			Pattern.compile("<span class=\"dbox-bold\">(.*?)</span>"),
+//			Pattern.compile("<span class=\"dbox-bold\">(.*?)</span>"), // this is returning the "phonetic part at the top
 	};
 	
 	/*

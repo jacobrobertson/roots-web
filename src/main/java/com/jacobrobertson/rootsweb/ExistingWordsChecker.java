@@ -15,7 +15,7 @@ import java.util.Set;
 public class ExistingWordsChecker {
 
 	public static void main(String[] args) throws Exception {
-		checkExistingWords();
+		checkRootsWithFewWords();
 	}
 
 	public static void findBlankDefinitions() throws Exception {
@@ -60,7 +60,28 @@ public class ExistingWordsChecker {
 		
 	}
 	
-	public static void checkExistingWords() throws Exception {
+	public static void checkRootsWithFewWords() throws Exception {
+		Map<String, Item> words = JsonDataMaker.downloadWordItems();
+		Map<String, Set<String>> rootsToWords = new HashMap<String, Set<String>>();
+		for (String wordName: words.keySet()) {
+			Item word = words.get(wordName);
+			for (String rootName: word.getRoots()) {
+				Set<String> wordsInRoot = rootsToWords.get(rootName);
+				if (wordsInRoot == null) {
+					wordsInRoot = new HashSet<String>();
+					rootsToWords.put(rootName, wordsInRoot);
+				}
+				wordsInRoot.add(wordName);
+			}
+		}
+		for (String rootName: rootsToWords.keySet()) {
+			Set<String> wordsInRoot = rootsToWords.get(rootName);
+			if (wordsInRoot.size() < 2) {
+				System.out.println(rootName + " " + wordsInRoot);
+			}
+		}
+	}
+	public static void checkWordsWithFewRoots() throws Exception {
 		Map<String, Set<String>> rootWords = new HashMap<String, Set<String>>();
 		Map<String, Item> words = JsonDataMaker.downloadWordItems();
 		for (String wordName: words.keySet()) {
