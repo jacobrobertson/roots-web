@@ -62,4 +62,7 @@ public class Item {
 	public String getSimpleName() {
 		return simpleName;
 	}
+	public boolean isChild() {
+		return (parent != null || definition != null && definition.charAt(0) == '>');
+	}
 }

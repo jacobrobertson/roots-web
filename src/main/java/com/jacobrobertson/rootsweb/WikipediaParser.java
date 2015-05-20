@@ -316,12 +316,14 @@ public class WikipediaParser {
 			System.out.println(s);
 		}
 	}
-	private static List<Item> getSimpleMatches(Item wikiRoot, Map<String, Item> driveRoots) {
+	public static List<Item> getSimpleMatches(Item item, Map<String, Item> driveItems) {
+		return getSimpleMatches(item.getName(), driveItems);
+	}
+	public static List<Item> getSimpleMatches(String itemName, Map<String, Item> driveItems) {
 		List<Item> matches = new ArrayList<Item>();
-		String wikiName = wikiRoot.getName();
-		for (Item driveRoot: driveRoots.values()) {
+		for (Item driveRoot: driveItems.values()) {
 			String driveName = driveRoot.getSimpleName();
-			if (driveName.equals(wikiName)) {
+			if (driveName.equals(itemName)) {
 				matches.add(driveRoot);
 			}
 		}
